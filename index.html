@@ -1204,7 +1204,8 @@ const SEED_DATA = [
   {"id":4,"toolname":"mytool","tooldescription":"mytool","toolurl":"www.mytool.com","createddatetime":"28-05-2026","createdby":"vinod","ToolActive":1,"Totaluserclickcount":5,"Remark":""},
   {"id":5,"toolname":"genere report","tooldescription":"generate report","toolurl":"www.tcgenearterepport.com","createddatetime":"28-05-2026","createdby":"Ravindra","ToolActive":1,"Totaluserclickcount":0,"Remark":""},
   {"id":6,"toolname":"taxcaddy pulse","tooldescription":"taxcaddy pulse","toolurl":"www.taxcaddypulse.com","createddatetime":"28-05-2026","createdby":"jantosh","ToolActive":1,"Totaluserclickcount":1,"Remark":""},
-  {"id":7,"toolname":"Sunil new tool","tooldescription":"new tool","toolurl":"www.newtoo.com","createddatetime":"29-05-2026","createdby":"Sunil","ToolActive":1,"Totaluserclickcount":0,"Remark":""}
+  {"id":7,"toolname":"Sunil new tool","tooldescription":"new tool","toolurl":"www.newtoo.com","createddatetime":"29-05-2026","createdby":"Sunil","ToolActive":1,"Totaluserclickcount":0,"Remark":""},
+  {"id":8,"toolname":"Stage | API | Bulk sending client option is not working for TaxCaddy","tooldescription":"Defect: In the Stage environment, the Bulk Sending Client option is not functioning properly, preventing users from sending bulk communications/actions to multiple clients through TaxCaddy.","toolurl":"https://dev.azure.com/","createddatetime":"11-06-2026","createdby":"Defect AI","ToolActive":1,"Totaluserclickcount":0,"Remark":"Steps: 1) Log in to TaxCaddy in Stage. 2) Navigate to Bulk Sending Client. 3) Select one or more clients. 4) Attempt the bulk action. 5) Verify completion. Actual: The bulk sending operation fails, does not execute, or returns an error. Expected: Bulk actions should complete successfully for all selected clients without errors."}
 ];
 
 function readStore() {
@@ -1212,7 +1213,16 @@ function readStore() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (parsed && Array.isArray(parsed.tools)) return parsed;
+      if (parsed && Array.isArray(parsed.tools)) {
+        const existingIds = new Set(parsed.tools.map(t => Number(t.id) || 0));
+        const missingSeedTools = SEED_DATA
+          .filter(t => !existingIds.has(Number(t.id) || 0))
+          .map(normalizeTool);
+        if (!missingSeedTools.length) return parsed;
+        const store = { ...parsed, tools: [...parsed.tools.map(normalizeTool), ...missingSeedTools] };
+        writeStore(store);
+        return store;
+      }
     }
   } catch(e) { /* ignore */ }
   // First run — seed from ToolConfig.json data
