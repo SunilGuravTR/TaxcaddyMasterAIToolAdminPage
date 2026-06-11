@@ -896,6 +896,140 @@ tbody tr:hover td { background: var(--bg3); }
 }
 .stat-card.sc-clicks::before { background: var(--amber); }
 
+/* ── DEFECTS SECTION ─────────────────────────── */
+.defect-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.defect-count-bar {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+}
+.defect-row { cursor: pointer; }
+.defect-row:hover td { background: var(--bg3); }
+.td-defect-title {
+  font-weight: 500;
+  color: var(--text);
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.td-defect-env {
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.pill-env-stage { background: rgba(79,124,255,0.13); color: #6e95ff; border: 1px solid rgba(79,124,255,0.25); }
+.pill-env-dev   { background: rgba(62,207,142,0.13); color: #3ecf8e; border: 1px solid rgba(62,207,142,0.25); }
+.pill-env-prod  { background: rgba(242,84,106,0.13); color: #f2546a; border: 1px solid rgba(242,84,106,0.25); }
+.pill-status-open       { background: rgba(242,84,106,0.13); color: #f2546a;  border: 1px solid rgba(242,84,106,0.25); }
+.pill-status-inprogress { background: rgba(245,166,35,0.13); color: #f5a623;  border: 1px solid rgba(245,166,35,0.25); }
+.pill-status-resolved   { background: rgba(62,207,142,0.13); color: #3ecf8e;  border: 1px solid rgba(62,207,142,0.25); }
+.pill-status-closed     { background: rgba(139,144,168,0.13); color: #8b90a8; border: 1px solid rgba(139,144,168,0.25); }
+.pill-sev-critical { background: rgba(242,84,106,0.18); color: #f2546a;  border: 1px solid rgba(242,84,106,0.3); font-weight:600; }
+.pill-sev-high     { background: rgba(245,166,35,0.18); color: #f5a623;  border: 1px solid rgba(245,166,35,0.3); }
+.pill-sev-medium   { background: rgba(79,124,255,0.13); color: #6e95ff;  border: 1px solid rgba(79,124,255,0.25); }
+.pill-sev-low      { background: rgba(62,207,142,0.12); color: #3ecf8e;  border: 1px solid rgba(62,207,142,0.2); }
+
+/* Defect detail modal */
+.defect-modal-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(13,15,20,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+}
+.defect-modal-backdrop.open { display: flex; }
+.defect-modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+.defect-modal-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.defect-modal-title {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+  line-height: 1.4;
+}
+.defect-modal-close {
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: all .13s;
+  flex-shrink: 0;
+}
+.defect-modal-close:hover { background: var(--bg3); color: var(--text); }
+.defect-modal-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.defect-modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.defect-field-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  font-family: var(--mono);
+  margin-bottom: 6px;
+}
+.defect-field-value {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.defect-meta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
 /* ── LOADING OVERLAY ─────────────────────────── */
 #loading-overlay {
   display: none;
@@ -1015,6 +1149,9 @@ tbody tr:hover td { background: var(--bg3); }
     <button class="nav-btn" data-pane="usage" onclick="switchPane('usage', this)">
       <span class="icon">📈</span> Usage Analytics
     </button>
+    <button class="nav-btn" data-pane="defects" onclick="switchPane('defects', this)">
+      <span class="icon">🐛</span> Defects
+    </button>
     <div class="nav-label">Actions</div>
     <button class="nav-btn" onclick="openModal()">
       <span class="icon">➕</span> Add New Tool
@@ -1108,6 +1245,48 @@ tbody tr:hover td { background: var(--bg3); }
       </p>
     </div>
 
+    <!-- ── DEFECTS PANE ── -->
+    <div class="pane" id="pane-defects">
+      <div class="toolbar defect-toolbar">
+        <div class="search-wrap">
+          <span class="ico">🔍</span>
+          <input type="text" class="search-input" id="def-search"
+            placeholder="Search defects by title, environment…" oninput="renderDefects()">
+        </div>
+        <select class="filter-select" id="def-filter-env" onchange="renderDefects()">
+          <option value="all">All environments</option>
+          <option value="Stage">Stage</option>
+          <option value="Dev">Dev</option>
+          <option value="Prod">Prod</option>
+        </select>
+        <select class="filter-select" id="def-filter-status" onchange="renderDefects()">
+          <option value="all">All statuses</option>
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Environment</th>
+              <th>Severity</th>
+              <th>Status</th>
+              <th>Created Date</th>
+              <th>Reported By</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="def-tbl-body"></tbody>
+        </table>
+        <div class="defect-count-bar" id="def-count"></div>
+      </div>
+    </div>
+
   </div><!-- /content -->
 </main>
 
@@ -1179,6 +1358,36 @@ tbody tr:hover td { background: var(--bg3); }
   <span id="toast-msg">Saved successfully</span>
 </div>
 
+<!-- ═══ DEFECT DETAIL MODAL ═══ -->
+<div class="defect-modal-backdrop" id="defect-modal" onclick="handleDefectBackdropClick(event)">
+  <div class="defect-modal">
+    <div class="defect-modal-header">
+      <div class="defect-modal-title" id="dm-title"></div>
+      <button class="defect-modal-close" onclick="closeDefectDetail()">✕</button>
+    </div>
+    <div class="defect-modal-pills" id="dm-pills"></div>
+    <div class="defect-modal-body">
+      <div>
+        <div class="defect-field-label">Description</div>
+        <div class="defect-field-value" id="dm-desc"></div>
+      </div>
+      <div>
+        <div class="defect-field-label">Steps to Reproduce</div>
+        <div class="defect-field-value" id="dm-steps"></div>
+      </div>
+      <div>
+        <div class="defect-field-label">Actual Result</div>
+        <div class="defect-field-value" id="dm-actual"></div>
+      </div>
+      <div>
+        <div class="defect-field-label">Expected Result</div>
+        <div class="defect-field-value" id="dm-expected"></div>
+      </div>
+      <div class="defect-meta-row" id="dm-meta"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ LOADING OVERLAY ═══ -->
 <div id="loading-overlay">
   <div class="loading-box">
@@ -1232,6 +1441,104 @@ function writeStore(store) {
   if (syncChannel) {
     try { syncChannel.postMessage({ type: 'data_updated', ts: Date.now() }); } catch(e) {}
   }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DEFECT STORAGE LAYER
+   ═══════════════════════════════════════════════════════════ */
+const DEFECT_STORAGE_KEY = 'TCtool_Defects';
+
+const DEFECT_SEED_DATA = [
+  {
+    "id": 1,
+    "title": "Dev | API | CPA \u2013 \"Approve and Connect\" expired email notification sent even when taxpayer connection fails / does not happen",
+    "environment": "Dev",
+    "component": "API / CPA",
+    "severity": "High",
+    "status": "Open",
+    "description": "In the Dev environment, the system sends an expired \"Approve and Connect\" email notification even when the taxpayer connection is not created (connection fails or does not happen). This results in incorrect notifications and confusion for the CPA/taxpayer.",
+    "stepsToReproduce": "1. Log in to TaxCaddy CPA in the Dev environment.\n2. Initiate a taxpayer Approve and Connect invitation/connection flow for a client.\n3. Trigger a scenario where the taxpayer connection fails or is not completed/created (e.g., API failure, connection not saved, invite not successfully linked).\n4. Wait for the system to send the email notification (or check notification/email logs, if available).\n5. Verify the email received by the taxpayer.",
+    "actualResult": "An expired \"Approve and Connect\" email notification is sent even though the taxpayer connection did not happen / failed.",
+    "expectedResult": "The system should not send an expired \"Approve and Connect\" email when the taxpayer connection is not created or fails. The email should be triggered only when the connection exists and legitimately reaches an expired state.",
+    "createdDate": "11-06-2026",
+    "createdBy": "QA Team"
+  },
+  {
+    "id": 2,
+    "title": "Dev | API | CPA \u2013 Additional User activity feed logs Decline/Approve under incorrect tax year (TY2026)",
+    "environment": "Dev",
+    "component": "API / CPA",
+    "severity": "Medium",
+    "status": "Open",
+    "description": "In the Dev environment, Additional User activity feed entries for Decline or Approved actions are being logged under the wrong tax year (TY2026). This results in incorrect activity history and confusion when reviewing client actions by tax year.",
+    "stepsToReproduce": "1. Log in to TaxCaddy CPA in the Dev environment.\n2. Open a client and select a tax year other than TY2026 (e.g., TY2025).\n3. Initiate an Additional User connection/invitation for the client.\n4. Perform one of the actions: Approve the additional user connection, or Decline the additional user connection.\n5. Navigate to the client Activity Feed (or activity log) in CPA.\n6. Check which tax year the Decline/Approved activity entry is recorded under.",
+    "actualResult": "The Decline/Approved activity feed entry is logged under TY2026, even when the action was performed for a different tax year.",
+    "expectedResult": "The Decline/Approved activity feed entry should be logged under the correct tax year associated with the client/action (e.g., TY2025) and should not default to TY2026.",
+    "createdDate": "11-06-2026",
+    "createdBy": "QA Team"
+  },
+  {
+    "id": 3,
+    "title": "Prod | API | CPA\u2013TaxCaddy \u2013 Barcode not visible after adding it to a document and reopening the same document",
+    "environment": "Prod",
+    "component": "API / CPA",
+    "severity": "High",
+    "status": "Open",
+    "description": "In the Production environment, when a user adds a barcode to a document in CPA\u2013TaxCaddy, the barcode is initially added, but it becomes not visible after clicking elsewhere and then reopening the same document. This impacts document labeling/processing and may indicate the barcode is not being saved or not rendering on reload.",
+    "stepsToReproduce": "1. Log in to TaxCaddy CPA in Production.\n2. Open any client and navigate to the Documents section.\n3. Open a document (PDF/image) in the document viewer/editor.\n4. Add a Barcode to the document.\n5. Click somewhere outside the document (or navigate away/close the viewer).\n6. Open the same document again.\n7. Check whether the previously added barcode is visible.",
+    "actualResult": "The barcode is not visible after reopening the same document (barcode disappears / does not render).",
+    "expectedResult": "The barcode should remain visible after reopening the document, and the barcode placement should persist consistently across reloads.",
+    "createdDate": "11-06-2026",
+    "createdBy": "QA Team"
+  },
+  {
+    "id": 4,
+    "title": "Stage | API | Bulk sending client option is not working for TaxCaddy (send invite/reminder, create DRL/send DRL)",
+    "environment": "Stage",
+    "component": "API / TaxCaddy",
+    "severity": "Critical",
+    "status": "Open",
+    "description": "In the Stage environment, the Bulk Sending Client option is not functioning properly for multiple critical operations. Users are unable to perform bulk actions including:\n\u2022 Send invite to clients (bulk)\n\u2022 Send reminder to clients (bulk)\n\u2022 Create DRL (Document Request List) in bulk\n\u2022 Send DRL to clients in bulk\n\nThis impacts operational efficiency and client communication workflows in TaxCaddy.",
+    "stepsToReproduce": "1. Log in to TaxCaddy in the Stage environment.\n2. Navigate to the Bulk Sending Client feature/option.\n3. Select one or more clients for bulk action.\n4. Choose one of the following bulk operations:\n   \u2022 Send Invite\n   \u2022 Send Reminder\n   \u2022 Create DRL\n   \u2022 Send DRL\n5. Attempt to execute the selected bulk action.\n6. Verify if the bulk operation completes successfully.",
+    "actualResult": "The Bulk Sending Client option is not working for the above operations. The bulk action fails, does not execute, returns an error, or does not update/send the expected data to the selected clients.",
+    "expectedResult": "The Bulk Sending Client option should function properly for all operations (send invite, send reminder, create DRL, send DRL), allowing users to successfully process bulk actions to multiple selected clients without errors and ensure all clients receive the appropriate communications/DRL documents.",
+    "createdDate": "11-06-2026",
+    "createdBy": "QA Team"
+  }
+];
+
+function normalizeDefect(d) {
+  return {
+    id: Number(d.id) || 0,
+    title: String(d.title || ''),
+    environment: String(d.environment || ''),
+    component: String(d.component || ''),
+    severity: String(d.severity || 'Medium'),
+    status: String(d.status || 'Open'),
+    description: String(d.description || ''),
+    stepsToReproduce: String(d.stepsToReproduce || ''),
+    actualResult: String(d.actualResult || ''),
+    expectedResult: String(d.expectedResult || ''),
+    createdDate: String(d.createdDate || ''),
+    createdBy: String(d.createdBy || '')
+  };
+}
+
+function readDefectStore() {
+  try {
+    const raw = localStorage.getItem(DEFECT_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && Array.isArray(parsed.defects)) return parsed;
+    }
+  } catch(e) { /* ignore */ }
+  const store = { defects: DEFECT_SEED_DATA.map(normalizeDefect) };
+  writeDefectStore(store);
+  return store;
+}
+
+function writeDefectStore(store) {
+  localStorage.setItem(DEFECT_STORAGE_KEY, JSON.stringify(store));
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1338,11 +1645,12 @@ function manualRefresh() {
 }
 
 /* ── PANE SWITCHING ──────────────────────────── */
-const titles = { dashboard:"TaxCaddy Tool's Dashboard", table:'Admin Table', usage:'Usage Analytics' };
+const titles = { dashboard:"TaxCaddy Tool's Dashboard", table:'Admin Table', usage:'Usage Analytics', defects:'Defect Tracker' };
 const metas  = {
   dashboard: '',
   table:     'TCtool.ToolConfig — full record view',
-  usage:     'Totaluserclickcount per tool — all-time totals'
+  usage:     'Totaluserclickcount per tool — all-time totals',
+  defects:   'Logged defects — ADO tracking reference'
 };
 
 function switchPane(id, btn) {
@@ -1355,6 +1663,7 @@ function switchPane(id, btn) {
   if (id === 'dashboard') { renderStats(); renderCards(); }
   if (id === 'table') renderTable();
   if (id === 'usage') renderUsage();
+  if (id === 'defects') renderDefects();
 }
 
 /* ── RENDER STATS ────────────────────────────── */
@@ -1737,6 +2046,97 @@ function resetUsage(id) {
   }
 }
 
+/* ── DEFECT TRACKER ──────────────────────────── */
+let defects = [];
+
+function loadDefects() {
+  const store = readDefectStore();
+  defects = store.defects.map(normalizeDefect);
+}
+
+function renderDefects() {
+  if (!defects.length) loadDefects();
+  const q    = (document.getElementById('def-search').value || '').toLowerCase();
+  const fEnv = document.getElementById('def-filter-env').value;
+  const fSt  = document.getElementById('def-filter-status').value;
+
+  const list = defects.filter(d => {
+    const mq = !q
+      || d.title.toLowerCase().includes(q)
+      || d.environment.toLowerCase().includes(q)
+      || d.component.toLowerCase().includes(q)
+      || d.createdBy.toLowerCase().includes(q);
+    const me = fEnv === 'all' || d.environment === fEnv;
+    const ms = fSt  === 'all' || d.status === fSt;
+    return mq && me && ms;
+  });
+
+  document.getElementById('def-count').textContent =
+    `Showing ${list.length} of ${defects.length} defects`;
+
+  const body = document.getElementById('def-tbl-body');
+  if (!list.length) {
+    body.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--text3)">No defects match your filter.</td></tr>';
+    return;
+  }
+
+  body.innerHTML = list.map(d => {
+    const envCls    = 'pill pill-env-' + d.environment.toLowerCase();
+    const statusKey = d.status.replace(' ','').toLowerCase();
+    const statusCls = 'pill pill-status-' + statusKey;
+    const sevKey    = d.severity.toLowerCase();
+    const sevCls    = 'pill pill-sev-' + sevKey;
+    return `
+    <tr class="defect-row" onclick="openDefectDetail(${d.id})">
+      <td class="td-id">#${d.id}</td>
+      <td class="td-defect-title" title="${h(d.title)}">${h(d.title)}</td>
+      <td class="td-defect-env"><span class="${envCls}">${h(d.environment)}</span></td>
+      <td><span class="${sevCls}">${h(d.severity)}</span></td>
+      <td><span class="${statusCls}">${h(d.status)}</span></td>
+      <td class="td-date">${h(d.createdDate)}</td>
+      <td>${h(d.createdBy)}</td>
+      <td>
+        <button class="icon-btn" title="View details" onclick="event.stopPropagation();openDefectDetail(${d.id})">🔍</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function openDefectDetail(id) {
+  const d = defects.find(x => x.id === id);
+  if (!d) return;
+  document.getElementById('dm-title').textContent = d.title;
+
+  const envCls    = 'pill pill-env-' + d.environment.toLowerCase();
+  const statusKey = d.status.replace(' ','').toLowerCase();
+  const statusCls = 'pill pill-status-' + statusKey;
+  const sevKey    = d.severity.toLowerCase();
+  const sevCls    = 'pill pill-sev-' + sevKey;
+
+  document.getElementById('dm-pills').innerHTML = `
+    <span class="${envCls}">${h(d.environment)}</span>
+    <span class="${sevCls}">${h(d.severity)}</span>
+    <span class="${statusCls}">${h(d.status)}</span>
+    <span style="font-size:12px;color:var(--text3);font-family:var(--mono)">🧩 ${h(d.component)}</span>`;
+
+  document.getElementById('dm-desc').textContent     = d.description;
+  document.getElementById('dm-steps').textContent    = d.stepsToReproduce;
+  document.getElementById('dm-actual').textContent   = d.actualResult;
+  document.getElementById('dm-expected').textContent = d.expectedResult;
+  document.getElementById('dm-meta').innerHTML =
+    `<span>📅 Created: ${h(d.createdDate)}</span><span>👤 Reported by: ${h(d.createdBy)}</span><span>🆔 Defect ID: #${d.id}</span>`;
+
+  document.getElementById('defect-modal').classList.add('open');
+}
+
+function closeDefectDetail() {
+  document.getElementById('defect-modal').classList.remove('open');
+}
+
+function handleDefectBackdropClick(e) {
+  if (e.target === document.getElementById('defect-modal')) closeDefectDetail();
+}
+
 /* ── TOAST ───────────────────────────────────── */
 let toastTimer;
 function showToast(icon, msg) {
@@ -1752,11 +2152,13 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeModal();
     closeConfirm();
+    closeDefectDetail();
   }
 });
 
 /* ── INIT ────────────────────────────────────── */
 loadFromStorage(false);
+loadDefects();
 </script>
 </body>
 </html>
